@@ -47,10 +47,10 @@ public class CurrencyTest {
 	
 	@Test
 	public void testValueInThisCurrency() {
-		assertEquals(Integer.valueOf(1000), EUR.valueInThisCurrency(100, SEK));
-		assertEquals(Integer.valueOf(75), SEK.valueInThisCurrency(100, DKK));
+		assertEquals(Integer.valueOf(1000), EUR.valueInThisCurrency(10000, SEK));
+		assertEquals(Integer.valueOf(13333), SEK.valueInThisCurrency(10000, DKK));
 		assertEquals(Integer.valueOf(0), EUR.valueInThisCurrency(0, DKK));
-		assertEquals(Integer.valueOf(-400), DKK.valueInThisCurrency(-300, SEK));
+		assertEquals(Integer.valueOf(-22500), DKK.valueInThisCurrency(-30000, SEK));
 	}
 
 }

@@ -57,6 +57,6 @@ public class Currency {
 	 * @param othercurrency The other Currency
 	*/
 	public Integer valueInThisCurrency(Integer amount, Currency othercurrency) {
-		return (int)(universalValue(amount)/othercurrency.getRate());
+		return (int)(othercurrency.universalValue(amount)/this.getRate());
 	}
 }

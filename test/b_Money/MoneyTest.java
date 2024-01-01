@@ -44,21 +44,22 @@ public class MoneyTest {
 		assertEquals("10.0 EUR", EUR10.toString());
 		assertEquals("0.0 EUR", EUR0.toString());
 		assertEquals("100.0 SEK", SEK100.toString());
-		assertEquals("-100.0 EUR", SEKn100.toString());
+		assertEquals("-100.0 SEK", SEKn100.toString());
 	}
 
 	@Test
 	public void testGlobalValue() {
-		assertEquals(15, EUR10.universalValue(), 0);
-		assertEquals(0, SEK0.universalValue(), 0);
-		assertEquals(15, SEK100.universalValue(), 0);
-		assertEquals(-15, SEKn100.universalValue(), 0);
+		assertEquals(Integer.valueOf(1500), EUR10.universalValue());
+		assertEquals(Integer.valueOf(0), SEK0.universalValue());
+		assertEquals(Integer.valueOf(1500), SEK100.universalValue());
+		assertEquals(Integer.valueOf(-1500), SEKn100.universalValue());
 	}
 
 	@Test
 	public void testEqualsMoney() {
 		assertTrue(EUR0.equals(SEK0));
 		assertTrue(EUR10.equals(SEK100));
+		assertTrue(EUR10.equals(EUR10));
 		assertTrue(EUR20.equals(SEK200));
 		assertFalse(EUR10.equals(SEKn100));
 		assertFalse(EUR10.equals(EUR20));
