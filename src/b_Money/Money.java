@@ -41,6 +41,18 @@ public class Money implements Comparable {
 	public String toString() {
 		return this.getAmount() + " " + this.currency.getName(); 
 	}
+
+	/**
+	 * Implementation of inherited method from class Object
+	 * @param other the other Object that is being compared to this Money.
+	 * @return A Boolean indicating if the two monies are equal.
+	 */
+	public boolean equals(Object other){
+		if (this == other) return true;
+   		if (other == null || getClass() != other.getClass())
+			return false;
+		return equals((Money)other);
+	}
 	
 	/**
 	 * Gets the universal value of the Money, according the rate of its Currency.
@@ -125,7 +137,4 @@ public class Money implements Comparable {
 			return 0;
 	}
 
-	public boolean equals(Object other){
-		return this.equals((Money)other);
-	}
 }

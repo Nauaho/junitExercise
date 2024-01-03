@@ -17,6 +17,9 @@ public class CurrencyTest {
 	}
 
 	@Test
+	/* Testuje się poprawność formatowania i wyniku
+	 * zwracanego przez tą metodę
+	 */
 	public void testGetName() {
 		assertEquals("DKK", DKK.getName());
 		assertEquals("EUR", EUR.getName());
@@ -24,6 +27,9 @@ public class CurrencyTest {
 	}
 	
 	@Test
+	/* Testuje się poprawność wartośći
+	 * zwracanej przez tą metodę
+	 */
 	public void testGetRate() {
 		assertEquals(0.15, SEK.getRate(), 0);
 		assertEquals(0.20, DKK.getRate(), 0);
@@ -31,6 +37,9 @@ public class CurrencyTest {
 	}
 	
 	@Test
+	/* Testuje się poprawność ustalenia nowej wartości
+	 * atrybutu rate 
+	 */
 	public void testSetRate() {
 		Currency USD = new Currency("USD", 1d);
 		assertEquals(1d, USD.getRate(), 0d);
@@ -39,6 +48,10 @@ public class CurrencyTest {
 	}
 	
 	@Test
+	/* Testuje się poprawność obliczenia wartości
+	 * tej waluty w walucie uniwersalnej
+	 * dla wartości dodatnich, ujemnych i zerowych
+	 */
 	public void testGlobalValue() {
 		assertEquals(Integer.valueOf(150), EUR.universalValue(100));
 		assertEquals(Integer.valueOf(-40), DKK.universalValue(-200));
@@ -46,6 +59,10 @@ public class CurrencyTest {
 	}
 	
 	@Test
+	/* Testuje się poprawność obliczenia wartości
+	 * waluty w innej waluty w tej walucie 
+	 * dla wartości dodatnich, ujemnych i zerowych
+	 */
 	public void testValueInThisCurrency() {
 		assertEquals(Integer.valueOf(1000), EUR.valueInThisCurrency(10000, SEK));
 		assertEquals(Integer.valueOf(13333), SEK.valueInThisCurrency(10000, DKK));

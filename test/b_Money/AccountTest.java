@@ -24,7 +24,7 @@ public class AccountTest {
 	
 	@Test
 	public void testAddRemoveTimedPayment() {
-		fail("Write test case here");
+		testAccount.addTimedPayment("1", 2, 1, 1000, DanskeBank, null);
 	}
 	
 	@Test
