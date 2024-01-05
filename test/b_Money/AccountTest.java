@@ -34,14 +34,34 @@ public class AccountTest {
 	
 	@Test
 	/* Testuje się dodawanie i usuwanie płatności regularnej 
+	 * oraz poprawność działania metody tick() 
 	*/
 	public void testTimedPayment() throws AccountDoesNotExistException {
-		testAccount.addTimedPayment("aaa", 1, 1, new Money(10000, SEK), SweBank, "Alice");
+		testAccount.addTimedPayment("aaa", 1, 2, new Money(10000, SEK), SweBank, "Alice");
 		assertTrue(testAccount.timedPaymentExists("aaa"));
-		testAccount.tick();
 
-		testAccount.addTimedPayment("aaa", 1, 1, new Money(10000, SEK), SweBank, "Ali");
-		assertFalse(testAccount.timedPaymentExists("ccc"));
+		//podgotowienia się
+		Money testBalance = testAccount.getBalance();
+		Double aliceBalance = SweBank.getBalance("Alice");
+
+		//musi być takie same bo next == 2
+		testAccount.tick();
+		assertEquals(testBalance, testAccount.getBalance());
+		assertEquals(aliceBalance, SweBank.getBalance("Alice"), 0);
+		testBalance = testAccount.getBalance();
+		aliceBalance = SweBank.getBalance("Alice");
+
+		//musi różnić się o 100.00 SEK
+		testAccount.tick();
+		assertEquals(testBalance.sub(new Money(10000, SEK)), testAccount.getBalance());
+		assertEquals(aliceBalance + 100.0d, SweBank.getBalance("Alice"), 0);
+
+		//musi różnić się jeszce o 100.00 SEK czyli sumaruycznie 0 200.00 SEK
+		testAccount.tick();
+		assertEquals(testBalance.sub(new Money(20000, SEK)), testAccount.getBalance());
+		assertEquals(aliceBalance + 200.0d, SweBank.getBalance("Alice"), 0);
+		testAccount.removeTimedPayment("aaa");
+		assertFalse(testAccount.timedPaymentExists("aaa"));
 	}
 
 	@Test
