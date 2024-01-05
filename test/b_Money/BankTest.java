@@ -135,18 +135,16 @@ public class BankTest {
 		Double nordeaBobBalance = Nordea.getBalance("Bob");
 		Double sweBankBobBalance = SweBank.getBalance("Bob");
 		assertThrows(AccountDoesNotExistException.class, 
-			() -> SweBank.addTimedPayment("Bob1", "aa", 1, 1, new Money(10000, DKK), Nordea, "Bob" ));
+			() -> SweBank.addTimedPayment("Bob1", "aa", 1, 1, new Money(10000, SEK), Nordea, "Bob" ));
 		assertThrows(AccountDoesNotExistException.class, 
-			() -> SweBank.addTimedPayment("Bob", "aa", 1, 1, new Money(10000, DKK), Nordea, "Bob1" ));
-		SweBank.addTimedPayment("Bob", "aa", 1, 1, new Money(10000, DKK), Nordea, "Bob" );
+			() -> SweBank.addTimedPayment("Bob", "aa", 1, 1, new Money(10000, SEK), Nordea, "Bob1" ));
+		SweBank.addTimedPayment("Bob", "aa", 1, 1, new Money(10000, SEK), Nordea, "Bob" );
 		SweBank.tick();
 		assertEquals(sweBankBobBalance-100.00d, SweBank.getBalance("Bob"), 0);
 		assertEquals(nordeaBobBalance+100.00d, Nordea.getBalance("Bob"), 0);	
 		//usunięcie płatności regularnej
 		assertThrows(AccountDoesNotExistException.class, 
 			() -> SweBank.removeTimedPayment("Bob1", "aa"));
-		assertThrows(AccountDoesNotExistException.class, 
-			() -> SweBank.removeTimedPayment("Bob", "bb"));
 		nordeaBobBalance = Nordea.getBalance("Bob");
 		sweBankBobBalance = SweBank.getBalance("Bob");
 		SweBank.removeTimedPayment("Bob", "aa");

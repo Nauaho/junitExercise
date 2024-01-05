@@ -23,22 +23,37 @@ public class AccountTest {
 	}
 	
 	@Test
+	/* Testuje się dodawanie i usuwanie płatności regularnej 
+	*/
 	public void testAddRemoveTimedPayment() {
-		testAccount.addTimedPayment("1", 2, 1, 1000, DanskeBank, null);
+		testAccount.addTimedPayment("aaa", 1, 1, new Money(10000, SEK), SweBank, "Alice");
+		assertTrue(testAccount.timedPaymentExists("aaa"));
+		testAccount.removeTimedPayment("aaa");
+		assertFalse(testAccount.timedPaymentExists("aaa"));
 	}
 	
 	@Test
+	/* Testuje się dodawanie i usuwanie płatności regularnej 
+	*/
 	public void testTimedPayment() throws AccountDoesNotExistException {
-		fail("Write test case here");
+		testAccount.addTimedPayment("aaa", 1, 1, new Money(10000, SEK), SweBank, "Alice");
+		assertTrue(testAccount.timedPaymentExists("aaa"));
+		testAccount.tick();
+		
+		testAccount.addTimedPayment("aaa", 1, 1, new Money(10000, SEK), SweBank, "Ali");
+		assertFalse(testAccount.timedPaymentExists("ccc"));
 	}
 
 	@Test
 	public void testAddWithdraw() {
-		fail("Write test case here");
+		testAccount.withdraw(new Money(1000000, SEK));
+		assertEquals(new Money(9000000, SEK), testAccount.getBalance());
+		testAccount.deposit(new Money(1000000, SEK));
+		assertEquals(new Money(10000000, SEK), testAccount.getBalance());
 	}
 	
 	@Test
 	public void testGetBalance() {
-		fail("Write test case here");
+		assertEquals(new Money(10000000, SEK), testAccount.getBalance());
 	}
 }
