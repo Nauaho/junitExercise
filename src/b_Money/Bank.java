@@ -55,8 +55,9 @@ public class Bank {
 	 * @param money Money to deposit.
 	 * @throws AccountDoesNotExistException If the account does not exist
 	 */
+	//wyrzucono NullPointerException zamiast AccountDoesNotExistException
 	public void deposit(String accountid, Money money) throws AccountDoesNotExistException {
-		if (accountlist.containsKey(accountid)) {
+		if (!accountlist.containsKey(accountid)) {
 			throw new AccountDoesNotExistException();
 		}
 		else {
@@ -71,13 +72,14 @@ public class Bank {
 	 * @param money Money to withdraw
 	 * @throws AccountDoesNotExistException If the account does not exist
 	 */
+	// Wartość oczekiwana różni się od wartości wzróconej
 	public void withdraw(String accountid, Money money) throws AccountDoesNotExistException {
 		if (!accountlist.containsKey(accountid)) {
 			throw new AccountDoesNotExistException();
 		}
 		else {
 			Account account = accountlist.get(accountid);
-			account.deposit(money);
+			account.withdraw(money);
 		}
 	}
 	
@@ -87,7 +89,8 @@ public class Bank {
 	 * @return Balance of the account
 	 * @throws AccountDoesNotExistException If the account does not exist
 	 */
-	public Integer getBalance(String accountid) throws AccountDoesNotExistException {
+	//wyrzucono Error zamiast AccountDoesNotExistException
+	public Double getBalance(String accountid) throws AccountDoesNotExistException {
 		if (!accountlist.containsKey(accountid)) {
 			throw new AccountDoesNotExistException();
 		}
@@ -104,6 +107,7 @@ public class Bank {
 	 * @param amount Amount of Money to transfer
 	 * @throws AccountDoesNotExistException If one of the accounts do not exist
 	 */
+	// test nie zauważył konwertacji waluty przy przelewie między bankami o różnych walutach
 	public void transfer(String fromaccount, Bank tobank, String toaccount, Money amount) throws AccountDoesNotExistException {
 		if (!accountlist.containsKey(fromaccount) || !tobank.accountlist.containsKey(toaccount)) {
 			throw new AccountDoesNotExistException();
@@ -121,8 +125,9 @@ public class Bank {
 	 * @param amount Amount of Money to transfer
 	 * @throws AccountDoesNotExistException If one of the accounts do not exist
 	 */
+	//nie wyrzucono błędu AccountDoesNotExistException, kiedy on musiał zostać wyrzucony
 	public void transfer(String fromaccount, String toaccount, Money amount) throws AccountDoesNotExistException {
-		transfer(fromaccount, this, fromaccount, amount);
+		transfer(fromaccount, this, toaccount, amount);
 	}
 
 	/**
@@ -135,6 +140,7 @@ public class Bank {
 	 * @param tobank Bank where receiving account resides
 	 * @param toaccount Id of receiving account
 	 */
+	//wyrzucono NullPointerException zamiast AccountDoesNotExistException 
 	public void addTimedPayment(String accountid, String payid, Integer interval, Integer next, Money amount, Bank tobank, String toaccount) {
 		Account account = accountlist.get(accountid);
 		account.addTimedPayment(payid, interval, next, amount, tobank, toaccount);
