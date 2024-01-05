@@ -39,12 +39,14 @@ public class AccountTest {
 		testAccount.addTimedPayment("aaa", 1, 1, new Money(10000, SEK), SweBank, "Alice");
 		assertTrue(testAccount.timedPaymentExists("aaa"));
 		testAccount.tick();
-		
+
 		testAccount.addTimedPayment("aaa", 1, 1, new Money(10000, SEK), SweBank, "Ali");
 		assertFalse(testAccount.timedPaymentExists("ccc"));
 	}
 
 	@Test
+	/* Testuje się poprawność działania wypłaty i wpłaty
+	 */
 	public void testAddWithdraw() {
 		testAccount.withdraw(new Money(1000000, SEK));
 		assertEquals(new Money(9000000, SEK), testAccount.getBalance());
@@ -53,6 +55,8 @@ public class AccountTest {
 	}
 	
 	@Test
+	/* Testuje się poprawność wzróconej wartości
+	 */
 	public void testGetBalance() {
 		assertEquals(new Money(10000000, SEK), testAccount.getBalance());
 	}
