@@ -38,11 +38,13 @@ public class Bank {
 	 * @param accountid The ID of the account
 	 * @throws AccountExistsException If the account already exists
 	 */
+	// Nie wyrzucono błądu na próbe otwarcia już isniejącego konta
 	public void openAccount(String accountid) throws AccountExistsException {
 		if (accountlist.containsKey(accountid)) {
 			throw new AccountExistsException();
 		}
 		else {
+			accountlist.put(accountid, new Account(accountid, currency));
 			accountlist.get(accountid);
 		}
 	}
